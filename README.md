@@ -81,7 +81,7 @@ The application runs from a private Docker image. PostgreSQL data, uploaded file
 ### 1. Clone the deployment repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/nexusit-deploy.git
+git clone https://github.com/shotlasts/nexusit-deploy.git
 cd nexusit-deploy
 ```
 
@@ -94,7 +94,7 @@ cp .env.example .env
 Edit `.env`:
 
 ```env
-NEXUSIT_IMAGE=ghcr.io/YOUR-USERNAME/nexusit
+NEXUSIT_IMAGE=ghcr.io/shotlasts/nexusit
 NEXUSIT_VERSION=1.0.0
 
 POSTGRES_DB=nexusit
