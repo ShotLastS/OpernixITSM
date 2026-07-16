@@ -10,7 +10,7 @@ Helpdesk, asset management, access workflows and endpoint operations in one cent
 [![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/ShotLastS/OpernixITSM)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Linux](https://img.shields.io/badge/Linux-Supported-FCC624?style=for-the-badge&logo=linux&logoColor=black)](#requirements)
-[![Windows](https://img.shields.io/badge/Windows-Installer%20%7C%20Agent-0078D6?style=for-the-badge&logo=windows11&logoColor=white)](#windows-installation)
+[![Windows](https://img.shields.io/badge/Windows-Server%20Installer%20%7C%20Agent-0078D6?style=for-the-badge&logo=windows11&logoColor=white)](#windows-server-installation)
 [![Languages](https://img.shields.io/badge/Language-English%20%7C%20Türkçe-7C3AED?style=for-the-badge)](#features)
 
 </div>
@@ -425,72 +425,284 @@ Back up the database, runtime configuration and uploaded files regularly.
 Store backup copies outside the OpernixIT server whenever possible.
 
 
-## Windows Installation
+## Windows Server Installation
 
-OpernixIT also provides a Windows installer for local or server-based deployments.
+OpernixIT can also be installed directly on Windows without Docker.
 
-### Requirements
+The Windows installer installs OpernixIT as a Windows service, configures automatic startup, creates the required runtime folders and opens the initial setup wizard.
 
-- Windows 10, Windows 11, Windows Server 2019 or newer
+### Supported Systems
+
+- Windows 10 64-bit
+- Windows 11 64-bit
+- Windows Server 2019 or newer
 - Administrator privileges
-- At least 4 GB RAM
-- At least 20 GB free disk space
-- Network access for browser-based use and updates
 
-### Installation Steps
+### 1. Download the Installer
 
-1. Download the latest Windows installer from the official OpernixIT website or the GitHub Releases page.
-2. Right-click the installer and select **Run as administrator**.
-3. Follow the installation wizard.
-4. Select the installation directory.
-5. Complete the installation.
-6. Launch OpernixIT from the Start Menu or desktop shortcut.
-
-The default installation directory is:
+Download:
 
 ```text
-C:\Program Files\OpernixIT
+OpernixIT-Setup.exe
 ```
 
-After installation, open OpernixIT from the desktop shortcut or Start Menu.
+Use only the official OpernixIT website or the official GitHub Releases page.
+
+### 2. Run the Installer as Administrator
+
+Right-click:
+
+```text
+OpernixIT-Setup.exe
+```
+
+Select:
+
+```text
+Run as administrator
+```
 
 > [!WARNING]
 > **Windows SmartScreen Notice**
 >
 > The current OpernixIT Windows installer is signed with a self-signed certificate.
-> Windows may display a **Windows protected your PC** or **Unknown publisher** warning during installation.
+> Windows may display **Windows protected your PC** or **Unknown publisher**.
 >
 > To continue:
 >
 > 1. Click **More info**
 > 2. Click **Run anyway**
 >
-> Only download the installer from the official OpernixIT website or the official GitHub repository.
+> Only download OpernixIT from:
 >
-> Official website: [https://opernixit.com](https://opernixit.com)
+> - [https://opernixit.com](https://opernixit.com)
+> - [https://github.com/ShotLastS/OpernixITSM](https://github.com/ShotLastS/OpernixITSM)
 
-### Verify the Installer
+### 3. Complete the Setup Wizard
 
-You can verify the installer hash with PowerShell:
+The installer will:
 
-```powershell
-Get-FileHash .\OpernixIT-Setup-1.0.0.exe -Algorithm SHA256
+- Install OpernixIT under `C:\Program Files\OpernixIT`
+- Create the `OpernixIT` Windows service
+- Configure delayed automatic startup
+- Restart the service automatically after failures
+- Create persistent configuration, upload and log folders
+- Start OpernixIT on port `5000`
+- Open the initial setup page
+
+The persistent data folders are:
+
+```text
+C:\ProgramData\OpernixIT\config
+C:\ProgramData\OpernixIT\uploads
+C:\ProgramData\OpernixIT\logs
 ```
 
-Compare the displayed SHA-256 value with the checksum published on the official download page or GitHub release.
+### 4. Open the Initial Setup Page
 
-### Uninstalling OpernixIT
+The installer opens:
+
+```text
+http://localhost:5000/setup
+```
+
+To open OpernixIT from another computer on the network, use:
+
+```text
+http://WINDOWS-SERVER-IP:5000/setup
+```
+
+Example:
+
+```text
+http://192.168.1.50:5000/setup
+```
+
+### 5. Configure the Database
+
+For a quick local installation, select:
+
+```text
+SQLite
+```
+
+SQLite stores the database inside:
+
+```text
+C:\ProgramData\OpernixIT\config
+```
+
+For production environments, PostgreSQL is recommended.
+
+When using PostgreSQL, enter:
+
+| Field | Value |
+|---|---|
+| Database Type | PostgreSQL |
+| Host | PostgreSQL server IP or hostname |
+| Port | `5432` |
+| Database Name | Your PostgreSQL database name |
+| Database User | Your PostgreSQL username |
+| Database Password | Your PostgreSQL password |
+
+> [!IMPORTANT]
+> The Windows installer does not install PostgreSQL automatically.
+>
+> PostgreSQL must already be installed on the same Windows server or on another reachable server before selecting PostgreSQL in the setup wizard.
+
+### 6. Create the Administrator Account
+
+Complete the remaining fields:
+
+- System name
+- Company name
+- Support e-mail address
+- Default language
+- Super administrator username
+- Super administrator password
+- HTTPS preference
+
+After completing the wizard, open:
+
+```text
+http://localhost:5000
+```
+
+or from another computer:
+
+```text
+http://WINDOWS-SERVER-IP:5000
+```
+
+## Windows Service Management
+
+### Check the Service
+
+Open PowerShell as Administrator:
+
+```powershell
+Get-Service OpernixIT
+```
+
+Expected status:
+
+```text
+Running
+```
+
+### Start the Service
+
+```powershell
+Start-Service OpernixIT
+```
+
+### Stop the Service
+
+```powershell
+Stop-Service OpernixIT
+```
+
+### Restart the Service
+
+```powershell
+Restart-Service OpernixIT
+```
+
+You can also manage the service from:
+
+```text
+services.msc
+```
+
+Service name:
+
+```text
+OpernixIT
+```
+
+Display name:
+
+```text
+OpernixIT Service
+```
+
+## Windows Logs
+
+Standard service log:
+
+```text
+C:\ProgramData\OpernixIT\logs\opernixit-service.log
+```
+
+Error log:
+
+```text
+C:\ProgramData\OpernixIT\logs\opernixit-service-error.log
+```
+
+Read the latest error entries:
+
+```powershell
+Get-Content "C:\ProgramData\OpernixIT\logs\opernixit-service-error.log" -Tail 100
+```
+
+## Windows Firewall
+
+OpernixIT listens on TCP port `5000`.
+
+To allow access from other computers, run PowerShell as Administrator:
+
+```powershell
+New-NetFirewallRule -DisplayName "OpernixIT TCP 5000" -Direction Inbound -Protocol TCP -LocalPort 5000 -Action Allow
+```
+
+Verify that the port is listening:
+
+```powershell
+Get-NetTCPConnection -LocalPort 5000 -State Listen
+```
+
+## Windows Update
+
+Before updating, back up:
+
+```text
+C:\ProgramData\OpernixIT
+```
+
+Run the newer `OpernixIT-Setup.exe` as Administrator and install it over the existing installation.
+
+Leave **Fresh installation** unchecked to preserve the existing runtime configuration.
+
+> [!CAUTION]
+> Selecting **Fresh installation** resets the active setup files.
+>
+> Existing setup files are moved into a timestamped backup folder under:
+>
+> ```text
+> C:\ProgramData\OpernixIT
+> ```
+
+## Windows Uninstallation
 
 Open:
 
 ```text
 Settings
-└── Apps
-    └── Installed apps
-        └── OpernixIT
+→ Apps
+→ Installed apps
+→ OpernixIT
+→ Uninstall
 ```
 
-Select **Uninstall** and follow the removal wizard.
+The uninstaller removes the OpernixIT Windows service and application files.
+
+Back up the following folder before uninstalling when data must be preserved:
+
+```text
+C:\ProgramData\OpernixIT
+```
+
 
 ## Windows Agent
 
