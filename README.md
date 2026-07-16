@@ -1,40 +1,99 @@
-<p align="center">
-  <h1 align="center">OpernixIT</h1>
-  <p align="center">
-    Self-hosted IT Service Management, Asset Management and Endpoint Operations Platform
-  </p>
-</p>
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Docker-Supported-2496ED?logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white" alt="SQLite">
-  <img src="https://custom-icon-badges.demolab.com/badge/Windows-0078D6?logo=windows11&logoColor=white" alt="Windows">
-  <img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux">
-  <img src="https://img.shields.io/badge/Languages-English%20%7C%20Türkçe-7C3AED" alt="Languages">
-  <img src="https://img.shields.io/badge/Deployment-Private%20Container-111827" alt="Private Container">
-</p>
+# OpernixIT
+
+### Free Self-Hosted IT Service Management Platform
+
+Helpdesk, asset management, access workflows and endpoint operations in one centralized platform.
+
+[![Website](https://img.shields.io/badge/Website-opernixit.com-7C3AED?style=for-the-badge)](https://opernixit.com)
+[![Docker](https://img.shields.io/badge/Docker-Supported-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/ShotLastS/OpernixITSM)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Linux](https://img.shields.io/badge/Linux-Supported-FCC624?style=for-the-badge&logo=linux&logoColor=black)](#requirements)
+[![Windows Agent](https://img.shields.io/badge/Windows-Agent-0078D6?style=for-the-badge&logo=windows11&logoColor=white)](#windows-agent)
+[![Languages](https://img.shields.io/badge/Language-English%20%7C%20Türkçe-7C3AED?style=for-the-badge)](#features)
+
+</div>
+
+---
 
 > [!IMPORTANT]
-> This repository contains deployment files only. The OpernixIT application source code is not included. Application images are distributed through a private container registry.
+> This repository contains the public deployment files for OpernixIT.
+>
+> The application source code is maintained in a private repository. The ready-to-use Docker image is publicly distributed through GitHub Container Registry.
 
-## Overview
+## About OpernixIT
 
-OpernixIT is a self-hosted IT management platform designed for internal IT teams. It combines helpdesk operations, access requests, asset tracking, endpoint monitoring and operational reporting in a single interface.
+OpernixIT is a free, self-hosted IT management platform designed for internal IT departments, system administrators and technical support teams.
 
-Core capabilities include:
+It combines helpdesk operations, asset lifecycle management, access request workflows, endpoint monitoring and operational reporting in a single interface.
 
-- Ticket and helpdesk management
-- E-mail-to-ticket through `helpdesk@your-domain.com`
-- Access request workflows
-- Asset, assignment and warranty management
-- Windows endpoint agent monitoring
-- Software license tracking
-- Problem and change management
-- Inventory counts and QR workflows
-- Release and update management
-- Audit logs and operational reports
+OpernixIT runs entirely on your own infrastructure, allowing you to retain control over application data, uploaded files and system configuration.
+
+## Features
+
+### Helpdesk and Ticket Management
+
+- Ticket creation, assignment and tracking
+- Ticket priorities, categories and status workflows
+- SLA tracking
+- Critical ticket management
+- Internal notes and file attachments
+- E-mail-to-ticket support
+- Ticket activity history
+- Automatic ticket assignment
+
+### Asset Management
+
+- Hardware and software inventory
+- Asset assignment and return workflows
+- Warranty and purchase information
+- QR-supported asset records
+- Inventory count operations
+- Asset change history
+- License tracking
+- Assignment PDF generation
+
+### Access Request Workflows
+
+- Service catalog
+- Access and authorization requests
+- Approval workflows
+- Department-based visibility
+- Request status tracking
+- Audit history
+
+### Endpoint Operations
+
+- Windows endpoint agent
+- CPU, memory and disk information
+- Device name, IP address and domain information
+- Online and offline endpoint status
+- Last-seen tracking
+- Device inventory synchronization
+
+### IT Operations
+
+- Problem management
+- Change management
+- Release management
+- Knowledge base
+- Notifications
+- Operational reports
+- Audit logs
+- Scheduled reminders
+- Network topology management
+
+### Platform Features
+
 - English and Turkish interface
+- Dark and light themes
+- PostgreSQL support
+- SQLite support for local testing
+- Docker deployment
+- Persistent application storage
+- Initial setup wizard
+- Self-hosted architecture
 
 ## Interface
 
@@ -44,13 +103,13 @@ Core capabilities include:
   <img src="docs/img/dashboard.png" alt="OpernixIT Executive Dashboard" width="100%">
 </p>
 
-### Ticket and Operations View
+### Ticket and Operations Dashboard
 
 <p align="center">
-  <img src="docs/img/dashboard2.png" alt="OpernixIT Ticket and Operations View" width="100%">
+  <img src="docs/img/dashboard2.png" alt="OpernixIT Ticket and Operations Dashboard" width="100%">
 </p>
 
-## Deployment Architecture
+## Architecture
 
 ```text
 Users
@@ -59,154 +118,329 @@ Users
 OpernixIT Web Application
   │
   ├── PostgreSQL Database
+  ├── Persistent Runtime Configuration
   ├── Persistent Upload Storage
-  ├── Runtime Configuration
+  ├── E-mail and Notification Services
   └── Windows Endpoint Agents
 ```
 
-The application runs from a private Docker image. PostgreSQL data, uploaded files and runtime settings are stored in persistent Docker volumes.
+The Docker deployment contains two main services:
+
+| Service | Description |
+|---|---|
+| `app` | OpernixIT web application |
+| `db` | PostgreSQL 16 database |
+
+Application configuration, uploaded files and PostgreSQL data are stored in persistent Docker volumes.
 
 ## Requirements
 
+Recommended minimum server requirements:
+
 - Linux server
+- 2 CPU cores
+- 4 GB RAM
+- 20 GB free disk space
 - Docker Engine 24 or newer
 - Docker Compose v2
-- Access to the private OpernixIT container registry
-- Minimum 2 CPU cores
-- Minimum 4 GB RAM
-- Minimum 20 GB free disk space
+- Network access to `ghcr.io`
+
+For production environments:
+
+- Static IP address or DNS record
+- HTTPS reverse proxy
+- Regular PostgreSQL backups
+- SMTP account for outgoing notifications
 
 ## Quick Installation
 
-### 1. Clone the deployment repository
+### 1. Clone the Deployment Repository
 
 ```bash
-git clone https://github.com/shotlasts/OpernixITSM.git
+git clone https://github.com/ShotLastS/OpernixITSM.git
 cd OpernixITSM
-=======
-cd opernixit-deploy
 ```
 
-### 2. Create the environment file
+### 2. Create the Environment File
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env`:
+Open the environment file:
+
+```bash
+nano .env
+```
+
+Example configuration:
 
 ```env
-OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit:latest
+OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit
 OPERNIXIT_VERSION=1.0.0
 OPERNIXIT_PORT=5000
 
 POSTGRES_DB=opernixit
 POSTGRES_USER=opernixit
-POSTGRES_PASSWORD=CHANGE_THIS_PASSWORD
+POSTGRES_PASSWORD=CHANGE_WITH_A_LONG_RANDOM_PASSWORD
 
-OPERNIXIT_PORT=5000
 TZ=Europe/Istanbul
 ```
 
-Use a long and unique PostgreSQL password.
+> [!WARNING]
+> Do not include a version tag in `OPERNIXIT_IMAGE`.
+>
+> Correct:
+>
+> ```env
+> OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit
+> OPERNIXIT_VERSION=1.0.0
+> ```
+>
+> Incorrect:
+>
+> ```env
+> OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit:latest
+> OPERNIXIT_VERSION=1.0.0
+> ```
 
-### 3. Sign in to the private registry
-
-Create a GitHub token with permission to read packages, then run:
+### 3. Pull the Container Images
 
 ```bash
-echo "$GHCR_TOKEN" | docker login ghcr.io -u shotlasts --password-stdin
+docker compose pull
 ```
 
 ### 4. Start OpernixIT
 
 ```bash
-docker compose -f docker-compose.yml up -d
+docker compose up -d
 ```
 
-Check the containers:
+Check the service status:
 
 ```bash
-docker compose -f docker-compose.yml ps
+docker compose ps
 ```
 
-### 5. Open the setup wizard
+Expected result:
+
+```text
+opernixit-app    Up
+opernixit-db     Up (healthy)
+```
+
+### 5. Open the Setup Wizard
+
+Open the following address in your browser:
 
 ```text
 http://SERVER-IP:5000/setup
 ```
 
-During the first setup you can configure:
+Example:
 
-- Company name
+```text
+http://192.168.1.50:5000/setup
+```
+
+## Initial Setup
+
+During the first setup, select PostgreSQL and enter:
+
+| Field | Value |
+|---|---|
+| Database type | PostgreSQL |
+| Host | `db` |
+| Port | `5432` |
+| Database name | Value of `POSTGRES_DB` |
+| Database user | Value of `POSTGRES_USER` |
+| Database password | Value of `POSTGRES_PASSWORD` |
+
+> [!IMPORTANT]
+> Use `db` as the PostgreSQL host.
+>
+> Do not use `localhost`, `127.0.0.1` or the physical server IP address. The application connects to PostgreSQL through the internal Docker network.
+
+You will also configure:
+
 - System name
-- Default language
-- PostgreSQL connection
-- Super administrator account
+- Company name
 - Support e-mail address
-- Basic application settings
+- Default language
+- Super administrator username
+- Super administrator password
+- HTTPS preference
+
+After completing the setup wizard, the runtime configuration is stored in the persistent `opernixit_config` Docker volume.
 
 ## Updating OpernixIT
 
-Set the new version in `.env`:
+OpernixIT uses versioned container images.
+
+To update to a new release, edit `.env`:
 
 ```env
 OPERNIXIT_VERSION=1.0.1
 ```
 
-Pull and apply the update:
+Then run:
 
 ```bash
-docker compose -f docker-compose.yml pull
-docker compose -f docker-compose.yml up -d
+docker compose pull
+docker compose up -d
 ```
 
-Persistent database and uploaded files are preserved during updates.
+Check the running services:
 
-> [!WARNING]
-> Do not use `docker compose down -v`. The `-v` option removes persistent volumes and can delete the database.
+```bash
+docker compose ps
+```
+
+View the application logs:
+
+```bash
+docker compose logs --tail=100 app
+```
+
+### Using the Latest Release
+
+For testing environments, you can use:
+
+```env
+OPERNIXIT_VERSION=latest
+```
+
+Then update with:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+For production systems, a fixed version such as `1.0.0` or `1.0.1` is recommended.
 
 ## Useful Commands
 
-View running services:
+### Show Running Services
 
 ```bash
-docker compose -f docker-compose.yml ps
+docker compose ps
 ```
 
-View application logs:
+### View Application Logs
 
 ```bash
-docker compose -f docker-compose.yml logs -f app
+docker compose logs -f app
 ```
 
-View PostgreSQL logs:
+### View PostgreSQL Logs
 
 ```bash
-docker compose -f docker-compose.yml logs -f db
+docker compose logs -f db
 ```
 
-Restart the application:
+### Restart the Application
 
 ```bash
-docker compose -f docker-compose.yml restart app
+docker compose restart app
 ```
 
-Stop OpernixIT without deleting data:
+### Restart All Services
 
 ```bash
-docker compose -f docker-compose.yml down
+docker compose restart
 ```
 
-Start OpernixIT again:
+### Stop OpernixIT
 
 ```bash
-docker compose -f docker-compose.yml up -d
+docker compose down
 ```
 
-## Windows Agent Installation
+### Start OpernixIT Again
 
-The Windows agent collects endpoint inventory and health information and sends it to the OpernixIT server.
+```bash
+docker compose up -d
+```
+
+### Pull the Latest Configured Version
+
+```bash
+docker compose pull
+```
+
+### Inspect the Resolved Configuration
+
+```bash
+docker compose config
+```
+
+> [!CAUTION]
+> Never run:
+>
+> ```bash
+> docker compose down -v
+> ```
+>
+> The `-v` option removes persistent Docker volumes and may permanently delete the PostgreSQL database, uploaded files and runtime configuration.
+
+## Persistent Volumes
+
+The deployment uses the following volumes:
+
+| Volume | Purpose |
+|---|---|
+| `opernixit_postgres` | PostgreSQL database |
+| `opernixit_config` | Runtime application configuration |
+| `opernixit_uploads` | Uploaded files and attachments |
+
+List the volumes:
+
+```bash
+docker volume ls | grep opernixit
+```
+
+## Backup
+
+### Create a PostgreSQL Backup
+
+```bash
+docker compose exec -T db \
+  pg_dump -U opernixit -d opernixit \
+  > opernixit-backup.sql
+```
+
+### Restore a PostgreSQL Backup
+
+```bash
+cat opernixit-backup.sql | \
+docker compose exec -T db \
+  psql -U opernixit -d opernixit
+```
+
+### Back Up Persistent Volumes
+
+Back up the database, runtime configuration and uploaded files regularly.
+
+Store backup copies outside the OpernixIT server whenever possible.
+
+## Windows Agent
+
+The Windows endpoint agent collects device inventory and system health information and sends it to the OpernixIT server.
+
+The agent can collect:
+
+- Computer name
+- Logged-in user
+- IP address
+- Domain information
+- CPU information
+- Memory information
+- Disk capacity and usage
+- Operating system information
+- Last-seen status
+
+### Agent Installation
 
 Run PowerShell as Administrator:
 
@@ -218,19 +452,19 @@ Install the agent:
 
 ```powershell
 .\scripts\install-agent.ps1 `
-  -PackageUrl "https://downloads.example.com/OpernixITAgent-1.0.0.zip" `
-  -ServerUrl "https://opernixit.example.com" `
+  -PackageUrl "https://YOUR-DOWNLOAD-ADDRESS/OpernixITAgent-1.0.0.zip" `
+  -ServerUrl "https://YOUR-OPERNIXIT-SERVER" `
   -AgentKey "YOUR-AGENT-KEY"
 ```
 
-The installer:
+The installation script:
 
 - Installs the agent under `C:\Program Files\OpernixIT Agent`
 - Creates the `OpernixITAgent` Windows service
 - Enables delayed automatic startup
-- Restarts the service automatically after failures
+- Configures automatic service recovery
 - Creates the agent configuration file
-- Writes service logs locally
+- Stores local service logs
 
 Check the service:
 
@@ -244,41 +478,80 @@ Restart the service:
 Restart-Service OpernixITAgent
 ```
 
-Read the error log:
+Read the agent error log:
 
 ```powershell
 Get-Content "C:\Program Files\OpernixIT Agent\agent-service-error.log" -Tail 100
 ```
 
-## Domain Deployment
+## Active Directory Deployment
 
-For Active Directory environments, the agent can be distributed with a Computer Startup PowerShell script through Group Policy.
+The OpernixIT Windows Agent can be distributed through Group Policy in Active Directory environments.
 
-Recommended approach:
+Recommended deployment method:
 
 1. Store the agent package on a protected internal file share.
-2. Keep the installation script in a read-only deployment folder.
-3. Deploy the script through `Computer Configuration → Windows Settings → Scripts → Startup`.
-4. Use HTTPS for communication with the OpernixIT server.
-5. Rotate agent keys periodically.
-6. Do not publish agent keys in GitHub repositories.
+2. Grant domain computers read-only access.
+3. Store the PowerShell installation script in a controlled deployment directory.
+4. Open Group Policy Management.
+5. Navigate to:
 
-## Security Notes
+```text
+Computer Configuration
+└── Windows Settings
+    └── Scripts
+        └── Startup
+```
 
-- Keep the application source repository private.
-- Keep the Docker container image private.
-- Never commit `.env` files.
-- Never commit agent keys or private signing keys.
+6. Add the agent installation script.
+7. Test the policy on a limited organizational unit before domain-wide deployment.
+8. Use HTTPS for communication with the OpernixIT server.
+9. Rotate agent keys periodically.
+
+Never publish agent keys, API keys or credentials in a public repository.
+
+## Reverse Proxy and HTTPS
+
+For production deployments, place OpernixIT behind a reverse proxy such as:
+
+- Nginx
+- Caddy
+- Traefik
+- IIS Application Request Routing
+
+The reverse proxy should forward traffic to:
+
+```text
+http://127.0.0.1:5000
+```
+
+Recommended public address:
+
+```text
+https://itsm.example.com
+```
+
+Enable the HTTPS option in the setup wizard only after HTTPS has been configured correctly.
+
+## Security Recommendations
+
+- Change all default passwords.
+- Use a long and unique PostgreSQL password.
+- Never commit the `.env` file.
+- Never publish administrator credentials.
+- Never publish agent keys.
 - Use HTTPS in production.
-- Restrict PostgreSQL access to the Docker network.
-- Use read-only registry tokens for customer deployments.
-- Back up PostgreSQL volumes regularly.
-- Apply signed OpernixIT update packages only.
+- Restrict access to port `5000`.
+- Keep PostgreSQL available only through the Docker network.
+- Back up PostgreSQL regularly.
+- Use fixed image versions in production.
+- Review application and audit logs.
+- Keep Docker and the host operating system updated.
 
 ## Repository Structure
 
 ```text
-opernixit-deploy/
+OpernixITSM/
 ├── README.md
 ├── .env.example
 ├── docker-compose.yml
@@ -291,46 +564,128 @@ opernixit-deploy/
     └── update-opernixit.sh
 ```
 
-## Backup
+## Troubleshooting
 
-Create a PostgreSQL backup:
+### Image Reference Is Invalid
 
-```bash
-<<<<<<< HEAD
-docker compose -f docker-compose.yml exec -T db \
-=======
-docker compose -f docker-compose.private.yml exec -T db \
-  pg_dump -U opernixit opernixit > opernixit-backup.sql
+Error:
+
+```text
+invalid reference format
 ```
 
-Restore a backup:
+Check `.env`:
 
-```bash
-<<<<<<< HEAD
-cat opernixit-backup.sql | docker compose -f docker-compose.yml exec -T db \
-=======
-cat opernixit-backup.sql | docker compose -f docker-compose.private.yml exec -T db \
-  psql -U opernixit -d opernixit
+```env
+OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit
+OPERNIXIT_VERSION=1.0.0
 ```
 
-Store backups outside the application server whenever possible.
+Do not include `:latest` or another tag in `OPERNIXIT_IMAGE`.
+
+### Container Image Cannot Be Pulled
+
+Test the image directly:
+
+```bash
+docker pull ghcr.io/shotlasts/opernixit:1.0.0
+```
+
+Check the resolved Compose configuration:
+
+```bash
+docker compose config | grep image
+```
+
+### Application Container Is Restarting
+
+Check the logs:
+
+```bash
+docker compose logs --tail=150 app
+```
+
+### PostgreSQL Is Not Ready
+
+Check the database status:
+
+```bash
+docker compose ps
+docker compose logs --tail=100 db
+```
+
+### Port 5000 Is Already in Use
+
+Change the public port in `.env`:
+
+```env
+OPERNIXIT_PORT=5050
+```
+
+Then restart:
+
+```bash
+docker compose up -d
+```
+
+Open:
+
+```text
+http://SERVER-IP:5050
+```
+
+## Links
+
+- Website: [opernixit.com](https://opernixit.com)
+- Deployment repository: [github.com/ShotLastS/OpernixITSM](https://github.com/ShotLastS/OpernixITSM)
+- English documentation: [opernixit.com/en/documentation](https://opernixit.com/en/documentation/)
+- Turkish documentation: [opernixit.com/tr/documentation](https://opernixit.com/tr/documentation/)
+- Contact: [info@opernixit.com](mailto:info@opernixit.com)
 
 ## Support
 
-For technical support and deployment assistance:
+For bug reports, deployment assistance and general questions:
 
 ```text
-helpdesk@your-domain.com
+info@opernixit.com
 ```
 
-## License
+When requesting technical support, include:
 
-OpernixIT is proprietary software. Deployment files in this repository do not grant access to the application source code, container image or commercial license.
+- OpernixIT version
+- Linux distribution
+- Docker version
+- Docker Compose version
+- Relevant application logs
+- Relevant database logs
 
-Unauthorized copying, redistribution, reverse engineering or resale is prohibited.
+Do not include passwords, tokens, agent keys or confidential company data.
+
+## License and Distribution
+
+OpernixIT is free-to-use, self-hosted proprietary software.
+
+This repository contains deployment and installation files only. It does not include the OpernixIT application source code.
+
+The following actions are prohibited unless explicitly authorized:
+
+- Redistributing the OpernixIT application image
+- Reselling OpernixIT
+- Repackaging the application under another name
+- Reverse engineering
+- Removing OpernixIT branding
+- Claiming ownership of the software
+
+See the repository license file for complete terms.
 
 ---
 
-<p align="center">
-  Built for modern IT operations.
-</p>
+<div align="center">
+
+### Built for Modern IT Operations
+
+**Helpdesk · Assets · Endpoints · Access Workflows · Reporting**
+
+[Website](https://opernixit.com) · [Documentation](https://opernixit.com/en/documentation/) · [Contact](mailto:info@opernixit.com)
+
+</div>
