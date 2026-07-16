@@ -82,7 +82,6 @@ The application runs from a private Docker image. PostgreSQL data, uploaded file
 
 ```bash
 git clone https://github.com/shotlasts/OpernixITSM.git
-<<<<<<< HEAD
 cd OpernixITSM
 =======
 cd opernixit-deploy
@@ -97,11 +96,9 @@ cp .env.example .env
 Edit `.env`:
 
 ```env
-OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit
+OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit:latest
 OPERNIXIT_VERSION=1.0.0
-<<<<<<< HEAD
 OPERNIXIT_PORT=5000
-=======
 
 POSTGRES_DB=opernixit
 POSTGRES_USER=opernixit
