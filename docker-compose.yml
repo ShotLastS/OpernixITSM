@@ -4,6 +4,7 @@ services:
     container_name: opernixit-app
     restart: unless-stopped
     pull_policy: always
+    command: gunicorn -w 1 -b 0.0.0.0:5000 "app:create_app()"
     environment:
       OPERNIXIT_AUTO_RESTART: "1"
       CONFIG_DIR: /app/config
