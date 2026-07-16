@@ -86,7 +86,6 @@ git clone https://github.com/shotlasts/OpernixITSM.git
 cd OpernixITSM
 =======
 cd opernixit-deploy
->>>>>>> fc49a2bbef1d057ad1193e02d2756d1170933fd3
 ```
 
 ### 2. Create the environment file
@@ -103,7 +102,6 @@ OPERNIXIT_VERSION=1.0.0
 <<<<<<< HEAD
 OPERNIXIT_PORT=5000
 =======
->>>>>>> fc49a2bbef1d057ad1193e02d2756d1170933fd3
 
 POSTGRES_DB=opernixit
 POSTGRES_USER=opernixit
@@ -305,7 +303,6 @@ Create a PostgreSQL backup:
 docker compose -f docker-compose.yml exec -T db \
 =======
 docker compose -f docker-compose.private.yml exec -T db \
->>>>>>> fc49a2bbef1d057ad1193e02d2756d1170933fd3
   pg_dump -U opernixit opernixit > opernixit-backup.sql
 ```
 
@@ -316,7 +313,6 @@ Restore a backup:
 cat opernixit-backup.sql | docker compose -f docker-compose.yml exec -T db \
 =======
 cat opernixit-backup.sql | docker compose -f docker-compose.private.yml exec -T db \
->>>>>>> fc49a2bbef1d057ad1193e02d2756d1170933fd3
   psql -U opernixit -d opernixit
 ```
 
