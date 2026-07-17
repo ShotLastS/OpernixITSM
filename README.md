@@ -157,7 +157,7 @@ For production environments:
 ### 1. Clone the Deployment Repository
 
 ```bash
-git clone https://github.com/ShotLastS/OpernixITSM.git
+git clone https://github.com/OpernixIT/OpernixITSM.git
 cd OpernixITSM
 ```
 
@@ -193,14 +193,14 @@ TZ=Europe/Istanbul
 > Correct:
 >
 > ```env
-> OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit
+> OPERNIXIT_IMAGE=ghcr.io/opernixit/opernixit
 > OPERNIXIT_VERSION=1.0.0
 > ```
 >
 > Incorrect:
 >
 > ```env
-> OPERNIXIT_IMAGE=ghcr.io/shotlasts/opernixit:latest
+> OPERNIXIT_IMAGE=ghcr.io/opernixit/opernixit:latest
 > OPERNIXIT_VERSION=1.0.0
 > ```
 
