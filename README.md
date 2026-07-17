@@ -969,5 +969,4 @@ See the repository license file for complete terms.
 [Website](https://opernixit.com) · [Documentation](https://opernixit.com/en/documentation/) · [Contact](mailto:info@opernixit.com)
 
 </div>
-[!WARNING]
->Z<3E
+Z❤️
